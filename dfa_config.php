@@ -19,9 +19,11 @@ Using the token is good for testing purposes.
 */
 
 define("DFA_DEFAULT_APITOKEN", "7105f75667c6e8a9004cec501a893c76");
-
+//define("DFA_DEFAULT_APITOKEN", "");
 define("DFA_VERSION", "1.16");
 define("DFA_NAMESPACE", "http://www.doubleclick.net/dfa-api/");
+
+define("DFA_DEFAULT_APPLICATION_NAME", "DFAPHPAPI");
 
 
 ?>
