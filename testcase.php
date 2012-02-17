@@ -23,12 +23,20 @@ try
 	$creative = $creatives->records[0];
 	$creativeId = $creative->id;
 	
-	$creativeAsset = $d->saveCreativeAsset($advertiserId, "1127_Lacoste Report.txt", file_get_contents("http://tools.pmg.co/robots.txt"));
+	//$creativeAsset = $d->saveCreativeAsset($advertiserId, "1127_Lacoste Report.txt", file_get_contents("http://tools.pmg.co/robots.txt"));
 	
-	print_r($creativeAsset);
+	//print_r($creativeAsset);
 	
-	$savedCreative = $d->saveCreative($advertiserId, $campaignId, $creative->id, $creative->name, $creative->active, false, null, $creative->sizeId, $creative->typeId, ($creative->version+1),'ImageCreative', array("assetFilename"=>$creativeAsset->savedFilename));
+	//$savedCreative = $d->saveCreative($advertiserId, $campaignId, $creative->id, $creative->name, $creative->active, false, null, $creative->sizeId, $creative->typeId, ($creative->version+1),'ImageCreative', array("assetFilename"=>$creativeAsset->savedFilename));
 	
+	
+
+	$array = json_decode(json_encode($creative), true);
+	$array['archived'] = false;
+	$array['clickTags'] = array();
+	print_r($array);
+	
+	$savedCreative = $d->saveCreativeObject($array, $campaignId, 'FlashInpageCreative');
 		
 	print_r($savedCreative);
 	//print_r($d->deleteCreative($creativeId));

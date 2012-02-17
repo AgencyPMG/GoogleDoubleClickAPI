@@ -112,6 +112,15 @@ class DFACreative extends DFA
 		$soapClient = $this->getNewSOAPClient('creative');
 		return $soapClient->saveCreative($creative, $campaignId);
 	}
+	
+	public function saveCreativeObject($creativeObject, $campaignId=0, $creativeObjectType)
+	{
+	
+		$creative = new SoapVar($creativeObject, SOAP_ENC_OBJECT, $creativeObjectType, $this->namespace);
+	
+		$soapClient = $this->getNewSOAPClient('creative');
+		return $soapClient->saveCreative($creativeObject, $campaignId);
+	}
 
 }
 
