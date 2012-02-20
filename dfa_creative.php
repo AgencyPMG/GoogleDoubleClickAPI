@@ -10,13 +10,13 @@ class DFACreative extends DFA
 	@param creativeId float The creativeid
 	@param creativeGroupIds array Array of GreativeGroupIds
 	*/
+	
 	public function assignCreativeGroupsToCreative($campaignId, $creativeId, $craetiveGroupIds=array())
 	{
 		$soapClient = $this->getNewSOAPClient('creative');
 		return $soapClient->assignCreativeGroupsToCreative($campaignId, $creativeId, $creativeGroupIds);
 		
 	}
-
 
 	public function generateCreativeUploadSession($advertiserId, $campaignId)
 	{
@@ -106,7 +106,7 @@ class DFACreative extends DFA
 		if($subclass != '')
 		{ 
 			$creative = array_merge($creative, $subclassParams);
-			$creative = new SoapVar($creative, SOAP_ENC_OBJECT, 'ImageCreative', $this->namespace);
+			$creative = new SoapVar($creative, SOAP_ENC_OBJECT, $subclass, $this->namespace);
 		}
 
 		$soapClient = $this->getNewSOAPClient('creative');
@@ -115,7 +115,8 @@ class DFACreative extends DFA
 	
 	public function saveCreativeObject($creativeObject, $campaignId=0, $creativeObjectType)
 	{
-	
+		$creativeObject['creativeType'] = $creativeObjectType;
+		
 		$creative = new SoapVar($creativeObject, SOAP_ENC_OBJECT, $creativeObjectType, $this->namespace);
 	
 		$soapClient = $this->getNewSOAPClient('creative');

@@ -17,30 +17,34 @@ try
 	
 	//get a list of creatives
 	$creatives = $d->getCreatives($advertiserId, $campaignId);
-
-	print_r($creatives);
 	
 	$creative = $creatives->records[0];
 	$creativeId = $creative->id;
 	
-	//$creativeAsset = $d->saveCreativeAsset($advertiserId, "1127_Lacoste Report.txt", file_get_contents("http://tools.pmg.co/robots.txt"));
+	print_r($creative);
 	
-	//print_r($creativeAsset);
+	$creativeAsset = $d->saveCreativeAsset($advertiserId, "RobotsFile.txt", file_get_contents("http://tools.pmg.co/robots.txt"));
 	
-	//$savedCreative = $d->saveCreative($advertiserId, $campaignId, $creative->id, $creative->name, $creative->active, false, null, $creative->sizeId, $creative->typeId, ($creative->version+1),'ImageCreative', array("assetFilename"=>$creativeAsset->savedFilename));
+	print_r($creativeAsset);
+	
+	$creative = json_decode(json_encode($creative), true);
 	
 	
-
-	$array = json_decode(json_encode($creative), true);
-	$array['archived'] = false;
-	$array['clickTags'] = array();
-	print_r($array);
 	
-	$savedCreative = $d->saveCreativeObject($array, $campaignId, 'FlashInpageCreative');
-		
+	$creative['creativeAssets'][] = array('assetFilename'=>	$creativeAsset->savedFilename);
+	$creative['additionalImageAssets'][] = array('assetFilename'=>	$creativeAsset->savedFilename);
+	print_r($creative);
+	
+	$savedCreative = $d->saveCreative($advertiserId, $campaignId, $creative['id'], $creative['name'], $creative['active'], false, null, $creative['sizeId'], $creative['typeId'], ($creative['version']+1),'FlashInpageCreative', $creative);
+	
 	print_r($savedCreative);
-	//print_r($d->deleteCreative($creativeId));
-
+	
+	
+	//get a list of creatives
+	$creatives = $d->getCreatives($advertiserId, $campaignId);
+	
+	print_r($creatives);
+	
 	
 }
 catch(Exception $e)
